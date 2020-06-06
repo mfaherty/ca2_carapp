@@ -43,18 +43,14 @@ class Dealership(object):
         # stock_count[2]= diesel car stock.
         # stock_count[0]= hybrid car stock.
         
+        # These lines open a file and write the current number of 
+        # car of each type. 
         f = open('current_stock.txt', 'w')
         json.dump(stock_count, f)
         f.close()
 
         return stock_count
         
-    def write_stock(self,stock_count):
-        f = open('csvfile.csv','w')
-        f.write('hi there\n') #Give your csv text here.
-        ## Python will convert \n to os.linesep
-        f.close()
-
     
     def rent(self, car_list, amount):
 
@@ -67,11 +63,19 @@ class Dealership(object):
            total = total + 1
            
     def return_car(self, car_list, return_amount):
+        
+        # At the moment this function allow the user to return more car than
+        # the rental company has stock of.
+        # to add some sort of limit, i.e. can't return more than 40 petrol cars.
+        ##################################################################
         # above in rent module stock was written as [] 
         # stock_count[0]= petrol car stock.
         # stock_count[1]= electric car stock.
         # stock_count[2]= diesel car stock.
         # stock_count[0]= hybrid car stock.
+        
+        
+        # opens the file and read in the current stock of each car type
         
         with open ('current_stock.txt', 'r') as fp:
             stock_count = json.load(fp)
@@ -79,10 +83,7 @@ class Dealership(object):
             print(stock_count[1]+ 'electric cars in stock')
             print(stock_count[2]+ 'diesel cars in stock')
             print(stock_count[3]+ 'hybrid cars in stock')
-            print(type(stock_count))
-            print(car_list)
-            print(len(car_list))
-            print(type(car_list))
+
             
             
         if len(car_list) < return_amount:
@@ -94,6 +95,7 @@ class Dealership(object):
            car_list.append(1)
            total = total + 1
            
+        # writes the current stock to a file. 
         f = open('current_stock.txt', 'w')
         json.dump(stock_count, f)
         f.close()
@@ -175,56 +177,3 @@ while proceed == 'y':
 
 
 
-
-'''def main():
-    print("\t\tWelcome to Blackjack!\n")
-    
-    names = []
-    number = games.ask_number("How many players? (1 - 7): ", low = 1, high = 8)
-    for i in range(number):
-        name = input("Enter player name: ")
-        names.append(name)
-    print()
-        
-    game = BJ_Game(names)
-
-    again = None
-    while again != "n":
-        game.play()
-        again = games.ask_yes_no("\nDo you want to play again?: ")
-
-
-main()
-input("\n\nPress the enter key to exit.")
-
-class Switcher(object):
-          def indirect(self,i):
-                   method_name='number_'+str(i)
-                   method=getattr(self,method_name,lambda :'Invalid')
-                   return method()
-          def number_0(self):
-                   return 'zero'
-          def number_1(self):
-                   return 'one'
-          def number_2(self):
-                   return 'two'
->>> s=Switcher()
->>> s.indirect(2)
-
-
-
-number_1 = int(input('Enter your first number: '))
-number_2 = int(input('Enter your second number: '))
-
-print('{} + {} = '.format(number_1, number_2))
-print(number_1 + number_2)
-
-print('{} - {} = '.format(number_1, number_2))
-print(number_1 - number_2)
-
-print('{} * {} = '.format(number_1, number_2))
-print(number_1 * number_2)
-
-print('{} / {} = '.format(number_1, number_2))
-print(number_1 / number_2)
-'''
